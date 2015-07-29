@@ -14,6 +14,7 @@
 #include <fstream>
 #include <string>
 #include "TGraph.h"
+#include "TFile.h"
 
 // The purpose of this code is simply to calculate the number of B8 (boron 8) neutrino we expect to see in a water
 // detector (specifically SNO+). It requires ROOT to run.
@@ -107,7 +108,7 @@ void Expected_B8_neutrino_events()
     const double deltaQ = interval_length/stepNum;
     
     double sum = 0;
-    double x = 0;
+    double z = 0;
     
     // Here we just fit a ninth order polynominal to the normalized B8 neutrino spectrum
     TGraph *graph = new TGraph(q_vec.size(),q_arr,lambda_q);
@@ -118,9 +119,9 @@ void Expected_B8_neutrino_events()
     
     for(int k = 0; k < static_cast<int>(stepNum); k++)
     {
-        x = k*interval;
-        if(x != 0)
-            sum += (graph->GetFunction("pol9")->Eval(x))*eXSecTotQ(OurTMax,OurTMin,x)*deltaQ;
+        z = k*interval;
+        if(z != 0)
+            sum += (graph->GetFunction("pol9")->Eval(z))*eXSecTotQ(OurTMax,OurTMin,z)*deltaQ;
     }
     
     // See Bahcall (1989) p 382 eq. 13.2 for details
